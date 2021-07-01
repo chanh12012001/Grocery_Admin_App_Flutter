@@ -8,23 +8,20 @@ class CategoryListWidget extends StatelessWidget {
   Widget build(BuildContext context) {
 
     FirebaseServices _services = FirebaseServices();
-
     return Container(
       width: MediaQuery.of(context).size.width,
       child: StreamBuilder(
         stream: _services.category.snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
-          if (snapshot.hasError) {
-            return Center(
-              child: Text('Xảy ra sự cố'),
-            );
+          if(snapshot.hasError){
+            return Center (child: Text('Đã xảy ra sự cố'),);
           }
-          if (snapshot.connectionState == ConnectionState.waiting){
+          if(snapshot.connectionState==ConnectionState.waiting){
             return Center(child: CircularProgressIndicator(),);
           }
           return Wrap(
             direction: Axis.horizontal,
-            children: snapshot.data.docs.map((DocumentSnapshot document) {
+            children: snapshot.data.docs.map((DocumentSnapshot document){
               return CategoryCard(document);
             }).toList(),
           );

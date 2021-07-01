@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
 
-const vendorDetailsTextStyle = TextStyle(
-
+const kVendorDetailsTextStyle = TextStyle(
+    fontWeight: FontWeight.bold
 );

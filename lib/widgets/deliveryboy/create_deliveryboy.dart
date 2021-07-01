@@ -17,16 +17,15 @@ class _CreateNewBoyWidgetState extends State<CreateNewBoyWidget> {
   @override
   Widget build(BuildContext context) {
 
-    ArsProgressDialog progressDialog = ArsProgressDialog(
-        context,
+    ArsProgressDialog progressDialog = ArsProgressDialog(context,
         blur: 2,
-        backgroundColor: Color(0x33000000).withOpacity(.3),
+        backgroundColor: Color(0xFF84c225).withOpacity(.3),
         animationDuration: Duration(milliseconds: 500)
     );
 
     return Container(
-      width: MediaQuery.of(context).size.width,
       color: Colors.grey,
+      width: MediaQuery.of(context).size.width,
       height: 80,
       child: Row(
         children: [
@@ -36,16 +35,16 @@ class _CreateNewBoyWidgetState extends State<CreateNewBoyWidget> {
               padding: const EdgeInsets.only(left: 30),
               child: Container(
                 child: FlatButton(
-                  child: Text(
-                    'Tạo mới Delivery Boy',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      _visible = true;
-                    });
-                  },
-                  color: Colors.black54,
+                    child: Text(
+                      'Tạo người giao hàng mới',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _visible = true;
+                      });
+                    },
+                    color: Colors.black54
                 ),
               ),
             ),
@@ -54,7 +53,7 @@ class _CreateNewBoyWidgetState extends State<CreateNewBoyWidget> {
             visible: _visible,
             child: Container(
               child: Padding(
-                padding: const EdgeInsets.only(left: 30.0),
+                padding: const EdgeInsets.only(left: 30),
                 child: Container(
                   child: Row(
                     children: [
@@ -62,82 +61,86 @@ class _CreateNewBoyWidgetState extends State<CreateNewBoyWidget> {
                         width: 200,
                         height: 30,
                         child: TextField(
-                          //todo: Eamil validator
+                          //TODO : Email validator
                           controller: emailText,
                           decoration: InputDecoration(
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.black,
-                                  width: 1,
-                                ),
-                              ),
-                              filled: true,
-                              fillColor: Colors.white,
-                              hintText: 'Email ID',
-                              border: OutlineInputBorder(),
-                              contentPadding: EdgeInsets.only(left: 20)
-                          ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Colors.black, width: 1),
+                            ),
+                            filled: true,
+                            fillColor: Colors.white,
+                            hintText: 'Email',
+                            border: OutlineInputBorder(),
+                            contentPadding:
+                            EdgeInsets.only(left: 20),),
                         ),
                       ),
-                      SizedBox(width: 10,),
+                      SizedBox(
+                        width: 10,
+                      ),
                       SizedBox(
                         width: 200,
                         height: 30,
                         child: TextField(
                           controller: passwordText,
                           decoration: InputDecoration(
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.black,
-                                  width: 1,
-                                ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.black,
+                                width: 1,
                               ),
-                              filled: true,
-                              fillColor: Colors.white,
-                              hintText: 'Password',
-                              border: OutlineInputBorder(),
-                              contentPadding: EdgeInsets.only(left: 20)
-                          ),
+                            ),
+                            filled: true,
+                            fillColor: Colors.white,
+                            hintText: 'Mật khẩu',
+                            border: OutlineInputBorder(),
+                            contentPadding:
+                            EdgeInsets.only(left: 20),),
                         ),
                       ),
-                      SizedBox(width: 10,),
+                      SizedBox(
+                        width: 10,
+                      ),
                       FlatButton(
-                        child: Text('Lưu', style: TextStyle(color: Colors.white),),
-                        onPressed: () {
-                          if (emailText.text.isEmpty){
-                            return _services.showMyDialog(
+                          child: Text(
+                            'Save',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          onPressed: () {
+                            if(emailText.text.isEmpty){
+                              return _services.showMyDialog(
                                 context: context,
-                                title: 'Email ID',
-                                message: 'Vui lòng nhập Email'
-                            );
-                          }
-                          if (passwordText.text.isEmpty){
-                            return _services.showMyDialog(
-                                context: context,
-                                title: 'Mật khẩu',
-                                message: 'Vui lòng nhập mật khẩu'
-                            );
-                          }
-                          if (passwordText.text.length < 6){
-                            return _services.showMyDialog(
+                                title: 'Email',
+                                message: 'Vui lòng nhập Email',
+                              );
+                            }
+                            if(passwordText.text.isEmpty){
+                              return _services.showMyDialog(
                                 context: context,
                                 title: 'Mật khẩu',
-                                message: 'Mật khẩu quá ngắn (Tối da 6 ký tự)'
-                            );
-                          }
-                          progressDialog.show();
-                          _services.saveDeliveryBoys(emailText.text, passwordText.text).whenComplete((){
-                            emailText.clear();
-                            passwordText.clear();
-                            progressDialog.dismiss();
-                            _services.showMyDialog(
-                              context: context,
-                              title: 'Lưu Delivery Boy',
-                              message: 'Lưu thành công'
-                            );
-                          });
-                        },
-                        color: Colors.black54,
+                                message: 'Vui lòng nhập Mật khẩu',);
+                            }
+                            if(passwordText.text.length < 6){ //Tối thiểu 6 ký tự
+                              return _services.showMyDialog(
+                                context: context,
+                                title: 'Mật khẩu',
+                                message: 'Mật khẩu phải tối thiểu 6 ký tự',
+                              );
+                            }
+                            progressDialog.show();
+                            _services.saveDeliverBoys(emailText.text, passwordText.text).whenComplete((){
+                              emailText.clear();
+                              passwordText.clear();
+                              progressDialog.dismiss();
+                              _services.showMyDialog(
+                                  context: context,
+                                  title: 'Lưu',
+                                  message: 'Lưu thành công'
+                              );
+                            });
+                          },
+                          color: Colors.black54
                       ),
                     ],
                   ),

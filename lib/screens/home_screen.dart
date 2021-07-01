@@ -5,24 +5,26 @@ import 'package:grocery_admin_app_flutter/services/sidebar.dart';
 
 class HomeScreen extends StatelessWidget {
   static const String id = 'home-screen';
-
   @override
   Widget build(BuildContext context) {
+
     SideBarWidget _sideBar = SideBarWidget();
 
     return AdminScaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.black87,
+        backgroundColor: Colors.black54,
         iconTheme: IconThemeData(
-          color: Colors.white,
+            color: Colors.white
         ),
         title: const Text(
           'Grocery App Dashboard',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(
+            color: Colors.white,
+          ),
         ),
       ),
-      sideBar: _sideBar.sidebarMenus(context, HomeScreen.id),
+      sideBar: _sideBar.sideBarMenus(context,HomeScreen.id),
       body: SingleChildScrollView(
         child: Container(
           alignment: Alignment.topLeft,

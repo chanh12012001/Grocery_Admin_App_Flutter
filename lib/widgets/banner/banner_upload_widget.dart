@@ -1,8 +1,10 @@
 import 'dart:html';
-import 'package:firebase/firebase.dart' as fb;
+
 import 'package:ars_progress_dialog/ars_progress_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase/firebase.dart' as fb;
 import 'package:grocery_admin_app_flutter/services/firebase_services.dart';
+
 
 class BannerUploadWidget extends StatefulWidget {
   @override
@@ -10,28 +12,31 @@ class BannerUploadWidget extends StatefulWidget {
 }
 
 class _BannerUploadWidgetState extends State<BannerUploadWidget> {
+
   FirebaseServices _services = FirebaseServices();
-  var _filNameTextController = TextEditingController();
-  bool  _visible = false;
+  var _fileNameTextController = TextEditingController();
+  bool _visible = false;
   bool _imageSelected = true;
   String _url;
 
   @override
   Widget build(BuildContext context) {
 
-    ArsProgressDialog progressDialog = ArsProgressDialog(
-        context,
+    ArsProgressDialog progressDialog = ArsProgressDialog(context,
         blur: 2,
-        backgroundColor: Color(0x33000000).withOpacity(.3),
-        animationDuration: Duration(milliseconds: 500)
+        backgroundColor: Color(0xFF84c225).withOpacity(.3),
+        animationDuration: Duration(
+          milliseconds: 500,
+        ),
     );
 
-    return  Container(
+
+    return Container(
       color: Colors.grey,
       width: MediaQuery.of(context).size.width,
       height: 80,
       child: Padding(
-        padding: const EdgeInsets.only(left: 30.0),
+        padding: const EdgeInsets.only(left: 30),
         child: Row(
           children: [
             Visibility(
@@ -42,47 +47,53 @@ class _BannerUploadWidgetState extends State<BannerUploadWidget> {
                     AbsorbPointer(
                       absorbing: true,
                       child: SizedBox(
-                        width: 300,
-                        height: 30,
-                        child: TextField(
-                          controller: _filNameTextController,
-                          decoration: InputDecoration(
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.black,
-                                  width: 1,
+                          width: 300,
+                          height: 30,
+                          child: TextField(
+                            controller: _fileNameTextController,
+                            decoration: InputDecoration(
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Colors.black, width: 1),
                                 ),
-                              ),
-                              filled: true,
-                              fillColor: Colors.white,
-                              hintText: 'Không có hình ảnh được chọn',
-                              border: OutlineInputBorder(),
-                              contentPadding: EdgeInsets.only(left: 20)
-                          ),
-                        ),
+                                filled: true,
+                                fillColor: Colors.white,
+                                hintText: 'Không có hình ảnh nào được chọn',
+                                border: OutlineInputBorder(),
+                                contentPadding:
+                                EdgeInsets.only(left: 20)),
+                          )
                       ),
                     ),
                     FlatButton(
-                      child: Text('Upload Hình ảnh', style: TextStyle(color: Colors.white),),
+                      child: Text(
+                        'Tải ảnh lên',
+                        style: TextStyle(color: Colors.white),
+                      ),
                       onPressed: () {
                         uploadStorage();
                       },
                       color: Colors.black54,
                     ),
-                    SizedBox(width: 10,),
+                    SizedBox(
+                      width: 10,
+                    ),
                     AbsorbPointer(
                       absorbing: _imageSelected,
                       child: FlatButton(
-                        child: Text('Lưu hình ảnh', style: TextStyle(color: Colors.white),),
+                        child: Text(
+                          'Lưu ảnh',
+                          style: TextStyle(color: Colors.white),
+                        ),
                         onPressed: () {
                           progressDialog.show();
                           _services.uploadBannerImageToDb(_url).then((downloadUrl) {
-                            if (downloadUrl!=null){
+                            if(downloadUrl != null){
                               progressDialog.dismiss();
                               _services.showMyDialog(
-                                title: 'Hình ảnh quảng cáo mới',
-                                message: 'Lưu hình ảnh quảng cáo thành công',
-                                context: context,
+                                  title: 'Ảnh quảng cáo mới',
+                                  message: 'Lưu ảnh quảng cáo thành công',
+                                  context: context
                               );
                             }
                           });
@@ -95,25 +106,29 @@ class _BannerUploadWidgetState extends State<BannerUploadWidget> {
               ),
             ),
             Visibility(
-              visible: _visible ? false : true,
+              visible: _visible ?false : true,
               child: FlatButton(
                 color: Colors.black54,
-                child: Text('Thêm mới Banner', style: TextStyle(color: Colors.white),),
+                child: Text('Thêm ảnh quảng cáo mới',
+                    style: TextStyle(color: Colors.white)),
                 onPressed: () {
                   setState(() {
                     _visible = true;
                   });
                 },
               ),
-            ),
+            )
           ],
         ),
       ),
     );
   }
 
+
+  //----------------upload image form device---------------------
   void uploadImage({@required Function(File file) onSelected}) {
-    InputElement uploadInput = FileUploadInputElement()..accept = 'image/*';
+    InputElement uploadInput = FileUploadInputElement()
+      ..accept = 'image/*'; //Chỉ tải ảnh lên
     uploadInput.click();
     uploadInput.onChange.listen((event) {
       final file = uploadInput.files.first;
@@ -124,19 +139,26 @@ class _BannerUploadWidgetState extends State<BannerUploadWidget> {
       });
     });
   }
+  //----------------upload image form device---------------------
 
+
+  //----------upload selected image to Firebase storage--------------
   void uploadStorage() {
     final dateTime = DateTime.now();
     final path = 'bannerImage/$dateTime';
-    uploadImage(onSelected: (file){
-      if (file!=null){
+    uploadImage(onSelected: (file) {
+      if (file != null) {
         setState(() {
-          _filNameTextController.text = file.name;
-          _imageSelected = false;
+          _fileNameTextController.text = file.name;
+          _imageSelected=false;
           _url = path;
         });
-        fb.storage().refFromURL('gs://flutter-grocery-app-6f618.appspot.com').child(path).put(file);
+        fb.storage()
+            .refFromURL('gs://flutter-grocery-app-6f618.appspot.com')
+            .child(path).put(file);
       }
     });
   }
+  //----------upload selected image to Firebase storage--------------
+
 }

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_admin_scaffold/admin_scaffold.dart';
 import 'package:grocery_admin_app_flutter/services/sidebar.dart';
@@ -16,16 +15,14 @@ class DeliveryBoyScreen extends StatelessWidget {
       child: AdminScaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          backgroundColor: Colors.black87,
-          iconTheme: IconThemeData(
-            color: Colors.white,
-          ),
+          backgroundColor: Colors.black54,
+          iconTheme: IconThemeData(color: Colors.white),
           title: const Text(
             'Grocery App Dashboard',
             style: TextStyle(color: Colors.white),
           ),
         ),
-        sideBar: _sideBar.sidebarMenus(context, DeliveryBoyScreen.id),
+        sideBar: _sideBar.sideBarMenus(context, DeliveryBoyScreen.id),
         body: SingleChildScrollView(
           child: Container(
             alignment: Alignment.topLeft,
@@ -35,36 +32,40 @@ class DeliveryBoyScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Delivery Boy Screen',
+                  'Người giao hàng',
                   style: TextStyle(
                     fontWeight: FontWeight.w700,
                     fontSize: 36,
                   ),
                 ),
-                Text('Create new Delivery boys and Manage all Delivery Boys'),
-                Divider(thickness: 5,),
+                Text('Tạo người giao hàng mới và quản lý tất cả người giao hàng'),
+                Divider(
+                  thickness: 5,
+                ),
                 CreateNewBoyWidget(),
-                Divider(thickness: 5,),
-                //List of delivery boy
+                Divider(
+                  thickness: 5,
+                ),
+                //list of delivery boys
                 TabBar(
-                    indicatorColor: Theme.of(context).primaryColor,
-                    labelColor: Theme.of(context).primaryColor,
-                    unselectedLabelColor: Colors.black54,
-                    tabs: [
-                      Tab(text: 'New',),
-                      Tab(text: 'Approved',)
-                    ]
+                  indicatorColor: Theme.of(context).primaryColor,
+                  labelColor: Theme.of(context).primaryColor,
+                  unselectedLabelColor: Colors.black54,
+                  tabs: [
+                    Tab(text: 'MỚI',),
+                    Tab(text: 'ĐÃ XÁC NHẬN',),
+                  ],
                 ),
                 Expanded(
                   child: Container(
                     child: TabBarView(
                       children: [
                         NewBoys(),
-                        ApprovedBoys(),
+                        ApprovedBoys()
                       ],
                     ),
                   ),
-                ),
+                )
               ],
             ),
           ),
