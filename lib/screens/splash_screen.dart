@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:grocery_admin_app_flutter/screens/home_screen.dart';
@@ -13,29 +12,29 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
   @override
   void initState() {
     Timer(
-        Duration(seconds: 2),() {
+        Duration(seconds: 2),(){
       FirebaseAuth.instance.authStateChanges().listen((User user) {
         if (user == null) {
-          Navigator.pushReplacement (context,MaterialPageRoute (
-              builder: (BuildContext context) => LoginScreen()),
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (BuildContext context) => LoginScreen()),
           );
         } else {
-          Navigator.pushReplacement (context,MaterialPageRoute (
-              builder: (BuildContext context) => HomeScreen()),
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (BuildContext context) => HomeScreen()),
           );
         }
       });
     }
     );
+
     super.initState();
   }
-
   @override
   Widget build(BuildContext context) {
+
     return Center(
       child: Center(
         child: CircularProgressIndicator(),

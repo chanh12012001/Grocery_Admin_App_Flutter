@@ -4,8 +4,16 @@ import 'package:grocery_admin_app_flutter/services/sidebar.dart';
 import 'package:grocery_admin_app_flutter/widgets/category/category_list_widget.dart';
 import 'package:grocery_admin_app_flutter/widgets/category/category_upload_widget.dart';
 
-class CategoryScreen extends StatelessWidget {
+class CategoryScreen extends StatefulWidget {
   static const String id = 'category-screen';
+
+  @override
+  _CategoryScreenState createState() => _CategoryScreenState();
+}
+
+class _CategoryScreenState extends State<CategoryScreen> {
+
+
   @override
   Widget build(BuildContext context) {
     SideBarWidget _sideBar = SideBarWidget();
@@ -13,16 +21,18 @@ class CategoryScreen extends StatelessWidget {
     return AdminScaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
-        backgroundColor: Colors.black87,
+        backgroundColor: Colors.black54,
         iconTheme: IconThemeData(
-          color: Colors.white,
+            color: Colors.white
         ),
         title: const Text(
           'Grocery App Dashboard',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(
+            color: Colors.white,
+          ),
         ),
       ),
-      sideBar: _sideBar.sidebarMenus(context, CategoryScreen.id),
+      sideBar: _sideBar.sideBarMenus(context,CategoryScreen.id),
       body: SingleChildScrollView(
         child: Container(
           alignment: Alignment.topLeft,
@@ -31,13 +41,13 @@ class CategoryScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Categories',
+                'Danh mục',
                 style: TextStyle(
                   fontWeight: FontWeight.w700,
                   fontSize: 36,
                 ),
               ),
-              Text('Add new Categories and Sub Categories'),
+              Text('Thêm danh mục mới và danh mục phụ'),
               Divider(thickness: 5,),
               CategoryCreateWidget(),
               Divider(thickness: 5,),

@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:grocery_admin_app_flutter/services/firebase_services.dart';
 
@@ -12,7 +11,6 @@ class SubCategoryWidget extends StatefulWidget {
 }
 
 class _SubCategoryWidgetState extends State<SubCategoryWidget> {
-
   FirebaseServices _services = FirebaseServices();
   var _subCatNameTextController = TextEditingController();
 
@@ -26,16 +24,17 @@ class _SubCategoryWidgetState extends State<SubCategoryWidget> {
           padding: EdgeInsets.all(10),
           child: FutureBuilder<DocumentSnapshot>(
             future: _services.category.doc(widget.categoryName).get(),
-            builder:
-                (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-
+            builder: (BuildContext context,
+                AsyncSnapshot<DocumentSnapshot> snapshot) {
               if (snapshot.hasError) {
-                return Text("Something went wrong");
+                return Text("Đã xảy ra sự cố");
               }
 
               if (snapshot.connectionState == ConnectionState.done) {
                 if (!snapshot.hasData) {
-                  return Center(child: Text('Không có danh mục phụ nào được thêm vào'),);
+                  return Center(
+                    child: Text('Không có danh mục phụ được thêm vào'),
+                  );
                 }
                 Map<String, dynamic> data = snapshot.data.data();
                 return Column(
@@ -47,18 +46,23 @@ class _SubCategoryWidgetState extends State<SubCategoryWidget> {
                           Row(
                             children: [
                               Text('Danh mục chính: '),
-                              Text(widget.categoryName, style: TextStyle(fontWeight: FontWeight.bold),),
+                              Text(
+                                widget.categoryName,
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
                             ],
                           ),
-                          Divider(thickness: 3,),
-
+                          Divider(
+                            thickness: 3,
+                          ),
                         ],
                       ),
                     ),
                     Container(
+                      //subcategory list
                       child: Expanded(
                         child: ListView.builder(
-                          itemBuilder: (BuildContext context, int index){
+                          itemBuilder: (BuildContext context,int index){
                             return ListTile(
                               contentPadding: EdgeInsets.zero,
                               leading: CircleAvatar(
@@ -74,7 +78,9 @@ class _SubCategoryWidgetState extends State<SubCategoryWidget> {
                     Container(
                       child: Column(
                         children: [
-                          Divider(thickness: 4,),
+                          Divider(
+                            thickness: 4,
+                          ),
                           Container(
                             color: Colors.grey,
                             child: Column(
@@ -82,12 +88,18 @@ class _SubCategoryWidgetState extends State<SubCategoryWidget> {
                               children: [
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
-                                  child: Text('Thêm danh mục phụ mới', style: TextStyle(fontWeight: FontWeight.bold)),
+                                  child: Text(
+                                    'Thêm danh mục phụ mới',
+                                    style: TextStyle(fontWeight: FontWeight.bold),
+                                  ),
                                 ),
-                                SizedBox(height: 6,),
+                                SizedBox(
+                                  height: 6,
+                                ),
                                 Row(
                                   children: [
-                                    Expanded(child: SizedBox(
+                                    Expanded(
+                                      child: SizedBox(
                                         height: 30,
                                         child: TextField(
                                           controller: _subCatNameTextController,
@@ -99,17 +111,23 @@ class _SubCategoryWidgetState extends State<SubCategoryWidget> {
                                             focusedBorder: OutlineInputBorder(),
                                             contentPadding: EdgeInsets.only(left: 10),
                                           ),
-                                        )),
+                                        ),
+                                      ),
                                     ),
                                     FlatButton(
                                       color: Colors.black54,
-                                      child: Text('Lưu', style: TextStyle(color: Colors.white),),
-                                      onPressed: () {
-                                        if (_subCatNameTextController.text.isEmpty){
+                                      child: Text(
+                                        'Lưu',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      onPressed: (){
+                                        if(_subCatNameTextController.text.isEmpty){
                                           return _services.showMyDialog(
                                             context: context,
                                             title: 'Thêm danh mục phụ mới',
-                                            message: 'Cần thêm tên danh mục phụ'
+                                            message: 'Cần cung cấp tên danh mục phụ',
                                           );
                                         }
                                         DocumentReference doc = _services.category.doc(widget.categoryName);
@@ -118,24 +136,23 @@ class _SubCategoryWidgetState extends State<SubCategoryWidget> {
                                             {
                                               'name' : _subCatNameTextController.text
                                             }
-                                          ])
+                                          ]),
                                         });
                                         setState(() {});
                                         _subCatNameTextController.clear();
                                       },
-                                    ),
+                                    )
                                   ],
                                 )
                               ],
                             ),
-                          )
+                          ),
                         ],
                       ),
                     )
                   ],
                 );
               }
-
               return Center(child: CircularProgressIndicator());
             },
           ),

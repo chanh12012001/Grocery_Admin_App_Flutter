@@ -10,16 +10,16 @@ class CategoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       borderRadius: BorderRadius.circular(4),
-      onTap: () {
+      onTap: (){
         showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return SubCategoryWidget(document['name']);
-          },
+            context: context,
+            builder: (BuildContext context){
+              return SubCategoryWidget(document['name']);
+            }
         );
       },
       child: SizedBox(
-        height: 125,
+        height: 120,
         width: 120,
         child: Card(
           elevation: 4,
@@ -34,7 +34,7 @@ class CategoryCard extends StatelessWidget {
                     width: double.infinity,
                     child: Image.network(document['image']),
                   ),
-                  FittedBox(fit: BoxFit.contain ,child: Text(document['name'], style: TextStyle(fontWeight: FontWeight.bold),),),
+                  FittedBox(fit: BoxFit.contain,child: Text(document['name'],style: TextStyle(fontWeight: FontWeight.bold),)),
                 ],
               ),
             ),
