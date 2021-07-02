@@ -2,7 +2,7 @@ import 'package:ars_progress_dialog/ars_progress_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:grocery_admin_app_flutter/screens/home_screen.dart';
+import 'package:grocery_admin_app_flutter/screens/manage_banners.dart';
 import 'package:grocery_admin_app_flutter/services/firebase_services.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -38,7 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 if(userCredential!=null){
                   //nếu đăng nhập thành công, sẽ điều hướng đến màn hình chính
                   progressDialog.dismiss();
-                  Navigator.pushReplacementNamed(context, HomeScreen.id);
+                  Navigator.pushReplacementNamed(context, BannerScreen.id);
                 }
 
               }catch(e){

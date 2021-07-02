@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:grocery_admin_app_flutter/screens/home_screen.dart';
 import 'package:grocery_admin_app_flutter/screens/login_screen.dart';
+import 'package:grocery_admin_app_flutter/screens/manage_banners.dart';
 
 class SplashScreen extends StatefulWidget {
   static const String id = 'splash-screen';
@@ -23,7 +23,7 @@ class _SplashScreenState extends State<SplashScreen> {
           );
         } else {
           Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (BuildContext context) => HomeScreen()),
+              context, MaterialPageRoute(builder: (BuildContext context) => BannerScreen()),
           );
         }
       });

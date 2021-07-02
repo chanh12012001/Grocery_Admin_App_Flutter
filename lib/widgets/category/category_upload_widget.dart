@@ -118,6 +118,7 @@ class _CategoryCreateWidgetState extends State<CategoryCreateWidget> {
                                   context: context
                               );
                             }
+                            progressDialog.dismiss();
                           });
                           _categoryNameTextController.clear();
                           _fileNameTextController.clear();
