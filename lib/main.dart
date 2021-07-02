@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:grocery_admin_app_flutter/screens/admin_users.dart';
 import 'package:grocery_admin_app_flutter/screens/category_screen.dart';
 import 'package:grocery_admin_app_flutter/screens/delivery_boy_screen.dart';
-import 'package:grocery_admin_app_flutter/screens/home_screen.dart';
 import 'package:grocery_admin_app_flutter/screens/login_screen.dart';
 import 'package:grocery_admin_app_flutter/screens/manage_banners.dart';
 import 'package:grocery_admin_app_flutter/screens/notification_screen.dart';
@@ -27,7 +26,6 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: SplashScreen.id,
       routes: {
-        HomeScreen.id:(context)=>HomeScreen(),
         SplashScreen.id:(context)=>SplashScreen(),
         LoginScreen.id:(context)=>LoginScreen(),
         BannerScreen.id:(context)=>BannerScreen(),
